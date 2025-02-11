@@ -1,0 +1,123 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
+
+\usepackage{algorithm}
+
+
+
+\title{DMA_problemset_1}
+\author{Daniel Andre Bunckenburg}
+\date{February 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{Opgave 1}
+
+
+\subsection{1a}
+
+This computes the cumulative product of elements in an array A and add it to each element in another array B. The B[i] is the elementnumber in the new array B.  After the algorithm is has terminated, the B[i] is now the cumulative prodcut of the same index in array "A"
+
+
+as an example it could be A = [5,2,2] and then B= [5,10,20]
+
+
+\textbf{Equivalent Mathematical Representation:}
+
+\[
+B[i] = \prod_{j=1}^{i} A[j]
+\]
+
+Each \( B[i] \) stores the product of all elements of \( A \) from index \( 1 \) to \( i \).
+
+
+
+\subsection{1b}
+
+So the first outter loop go from i=1  to i =n, so the run time will be o(n) and then the inner loop go from j=1 to j=i so that would be o(i) 
+
+
+\begin{algorithm}
+\caption{Function A }
+\begin{algorithmic}[1]
+\For{$i \gets 1$ to $n$} \Comment{Runs $n$ times ($O(n)$)}
+    \State $B[i] \gets 1$ \Comment{$O(1)$ operation}
+    \For{$j \gets 1$ to $i$} \Comment{Runs $i$ times (nested loop)}
+        \State $B[i] \gets B[i] \times A[j]$ \Comment{$O(1)$ operation per iteration}
+    \EndFor
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\subsection{1c}
+
+
+\begin{algorithm}
+\caption{Function B}
+\begin{algorithmic}[1]
+\Procedure{Function B}{$A, n$}
+    \State $B[1] := A[1]$ \Comment{Initialize first element}
+    \For{$i := 2$ to $n$} \Comment{Iterate from the second element to the nth element}
+        \State $B[i] := B[i - 1] \times A[i]$ \Comment{Compute $B[i]$ using the previous product}
+    \EndFor
+    \State \Return $B$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+now there is only one loop so the runtime is O(n) so much faster now
+
+\section{2}
+
+\subsection{2a}
+The function check first the left par
+The function first find the middelpoint in the array, then it check the left part of the array from the middelpoint if it is small than or equal to the middelpoint, then it takes the right part of the middelpoint and check if it is grater or equal than the middelpoint. lastly it does this recursively and does it to smaller and smaller arrays. Finnially if everything is in order then it return the success to "True".
+
+So the result would be "True" if everything in the array is orders, and "false" if that is not the case.
+
+
+\subsection{2b}
+
+
+
+\subsection{2c}
+
+\begin{verbatim}
+def check(A):
+    n = len(A)
+    if n <= 1:
+        return True
+
+    mid = n // 2
+    left_max = A[mid]
+    
+    # Check left side: A[i] ≤ A[mid] for all i in [0, mid-1]
+    for i in range(mid):
+        if A[i] > left_max:
+            return False
+
+    right_min = A[mid]
+
+    # Check right side: A[i] ≥ A[mid] for all i in [mid+1, n-1]
+    for i in range(mid + 1, n):
+        if A[i] < right_min:
+            return False
+
+    return True
+
+\end{verbatim}
+
+
+
+
+\end{document}
